@@ -15,15 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import TemplateView
 from emenu.menu import views
 from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view
 
 router = DefaultRouter()
 router.register(r'menu', views.MenuViewSet)
 router.register(r'dishes', views.DishViewSet)
 
 urlpatterns = [
+    path('', views.api_root, name='root'),
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('openapi/', get_schema_view(
+        title="eMenu API",
+        description="API for fetching and managing restaurant menu",
+        version="1.0.0",
+        public=True,
+    ), name='openapi-schema'),
+    path('docs/', TemplateView.as_view(
+        template_name='menu/swagger-ui.html',
+        extra_context={'schema_url': 'openapi-schema'}
+    ), name='swagger-ui'),
 ]

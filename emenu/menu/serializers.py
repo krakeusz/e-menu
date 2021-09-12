@@ -16,6 +16,7 @@ class MenuDetailSerializer(serializers.HyperlinkedModelSerializer):
 
 class MenuSerializer(serializers.HyperlinkedModelSerializer):
     dishes = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Menu
-        fields = ['url', 'name', 'description', 'date_added', 'date_modified', 'dishes']
+        fields = ['url', 'name', 'description', 'date_added', 'date_modified', 'dishes', 'pk']
