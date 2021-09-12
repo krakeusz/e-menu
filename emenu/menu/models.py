@@ -10,6 +10,9 @@ class Dish(models.Model):
     date_modified = fields.DateTimeField(auto_now=True)
     is_vegan = fields.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Menu(models.Model):
     name = fields.CharField(unique=True, max_length=100)
@@ -17,4 +20,7 @@ class Menu(models.Model):
     date_added = fields.DateTimeField(auto_now_add=True)
     date_modified = fields.DateTimeField(auto_now=True)
     dishes = models.ManyToManyField(to=Dish)
+
+    def __str__(self):
+        return self.name
 
