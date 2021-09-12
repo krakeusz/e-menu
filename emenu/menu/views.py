@@ -31,8 +31,10 @@ class MenuViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def list(self, request):
-        serializer = MenuSerializer(self.queryset, many=True, context={'request': request})
+        serializer = MenuSerializer(
+            self.queryset, many=True, context={'request': request})
         return Response(serializer.data)
+
 
 class DishViewSet(viewsets.ModelViewSet):
     """
@@ -57,6 +59,7 @@ class DishViewSet(viewsets.ModelViewSet):
     queryset = Dish.objects.all()
     serializer_class = DishSerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
 @api_view(['GET'])
 @schema(None)

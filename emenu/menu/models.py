@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import fields
 
+
 class Dish(models.Model):
     name = fields.CharField(unique=True, max_length=200)
     description = fields.TextField()
@@ -23,4 +24,3 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.name
-
