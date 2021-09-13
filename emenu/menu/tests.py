@@ -8,6 +8,13 @@ from rest_framework.test import APITestCase
 import json
 import re
 
+"""
+To get coverage:
+coverage run --source='emenu/' --omit='*/tests.py,*/wsgi.py,*/asgi.py,*/migrations/*' manage.py test
+coverage report
+coverage html
+"""
+
 
 class PublicApiTests(APITestCase):
     fixtures = ['testing.json']
