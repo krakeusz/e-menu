@@ -17,16 +17,23 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 from emenu.menu import views
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import DefaultRouter, SimpleRouter
 from rest_framework.schemas import get_schema_view
 
-router = DefaultRouter()
-router.register(r'menu', views.MenuViewSet)
-router.register(r'dishes', views.DishViewSet)
+public_router = SimpleRouter()
+public_router.register(r'menu', views.PublicMenuViewSet,
+                       basename='public-menu')
+
+private_router = SimpleRouter()
+private_router.register(
+    r'menu', views.PrivateMenuViewSet, basename='private-menu')
+private_router.register(
+    r'dishes', views.PrivateDishViewSet)
 
 urlpatterns = [
     path('', views.api_root, name='root'),
-    path('', include(router.urls)),
+    path('private/', include(private_router.urls)),
+    path('public/', include(public_router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('openapi/', get_schema_view(

@@ -9,19 +9,42 @@ class DishSerializer(serializers.HyperlinkedModelSerializer):
                   'preparation_time', 'date_added', 'date_modified', 'is_vegan']
 
 
-class MenuDetailSerializer(serializers.HyperlinkedModelSerializer):
+class PublicMenuDetailSerializer(serializers.HyperlinkedModelSerializer):
     dishes = DishSerializer(many=True)
 
     class Meta:
         model = Menu
         fields = ['url', 'name', 'description',
-                  'date_added', 'date_modified', 'dishes']
+                  'date_added', 'date_modified', 'dishes', 'pk']
+        extra_kwargs = {
+            'url': {
+                'view_name': 'public-menu-detail'
+            }
+        }
 
 
-class MenuSerializer(serializers.HyperlinkedModelSerializer):
+class PublicMenuSimpleSerializer(serializers.HyperlinkedModelSerializer):
     dishes = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Menu
         fields = ['url', 'name', 'description',
                   'date_added', 'date_modified', 'dishes', 'pk']
+        extra_kwargs = {
+            'url': {
+                'view_name': 'public-menu-detail'
+            }
+        }
+
+
+class PrivateMenuSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Menu
+        fields = ['url', 'name', 'description',
+                  'date_added', 'date_modified', 'dishes', 'pk']
+        extra_kwargs = {
+            'url': {
+                'view_name': 'private-menu-detail'
+            }
+        }
