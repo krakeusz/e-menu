@@ -38,6 +38,8 @@ class PublicMenuSimpleSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PrivateMenuSerializer(serializers.HyperlinkedModelSerializer):
+    dishes = serializers.HyperlinkedRelatedField(
+        many=True, allow_null=True, queryset=Dish.objects.all(), view_name='dish-detail')
 
     class Meta:
         model = Menu

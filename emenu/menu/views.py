@@ -23,7 +23,7 @@ class PublicMenuListViewSet(viewsets.GenericViewSet,
 
     By default, the results are sorted in ascending order. To sort in descending order, add '-' prefix. For example,
 
-    <pre>?ordering=name,-dishes__count</pre>
+    <pre>?ordering=-dishes__count,name</pre>
 
     The rest of the optional parameters allow filtering the results. For example,
 
