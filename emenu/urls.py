@@ -21,7 +21,9 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 from rest_framework.schemas import get_schema_view
 
 public_router = SimpleRouter()
-public_router.register(r'menu', views.PublicMenuViewSet,
+public_router.register(r'menu', views.PublicMenuListViewSet,
+                       basename='public-menu')
+public_router.register(r'menu', views.PublicMenuDetailsViewSet,
                        basename='public-menu')
 
 private_router = SimpleRouter()

@@ -1,8 +1,10 @@
 from django.core.exceptions import ValidationError
 from django.db.models import Count
+from django_filters.rest_framework import DjangoFilterBackend
+from emenu.menu.filters import MenuFilter
 from emenu.menu.models import Dish, Menu
 from emenu.menu.serializers import DishSerializer, PrivateMenuSerializer, PublicMenuSimpleSerializer, PublicMenuDetailSerializer
-from rest_framework import permissions, viewsets, status
+from rest_framework import permissions, viewsets, filters, mixins
 from rest_framework.decorators import api_view, schema
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
@@ -10,52 +12,41 @@ from rest_framework.reverse import reverse
 import re
 
 
-class PublicMenuViewSet(viewsets.ReadOnlyModelViewSet):
+class PublicMenuListViewSet(viewsets.GenericViewSet,
+                            mixins.ListModelMixin):
     """
-    list:
     Get the list of all menus. This is a public method.
 
-    retrieve:
-    Get the details of a single menu, including details of dishes. This is a public method.
+    The optional 'ordering' parameter accepts ordering by two fields:
+    - dishes__count
+    - name
+
+    By default, the results are sorted in ascending order. To sort in descending order, add '-' prefix. For example,
+
+    <pre>?ordering=name,-dishes__count</pre>
+
+    The rest of the optional parameters allow filtering the results. For example,
+
+    <pre>?date_added__lt=2021-01-01</pre>
+
+    will show only the menus added before year 2021.
     """
     queryset = Menu.objects.annotate(Count('dishes')).exclude(dishes__count=0)
+    serializer_class = PublicMenuSimpleSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
+    filterset_class = MenuFilter
+    ordering_fields = ['name', 'dishes__count']
+
+
+class PublicMenuDetailsViewSet(viewsets.GenericViewSet,
+                               mixins.RetrieveModelMixin):
+    """
+    Get the details of a single menu, including details of dishes. This is a public method.
+    """
+    queryset = Menu.objects.all()
     serializer_class = PublicMenuDetailSerializer
     permission_classes = [permissions.AllowAny]
-
-    def __process_filter(self, request, field_name):
-        """
-        Add a GET option to filter results by given field values.
-        """
-        if field_name in request.query_params:
-            filter_by = request.query_params[field_name].split(',')
-            for filter_expr in filter_by:
-                comparison_op = 'exact'
-                match = re.match(r'(gt|gte|lt|lte):(.*)', filter_expr)
-                if match:
-                    comparison_op = match.group(1)
-                    filter_expr = match.group(2)
-                kwargs = {f'{field_name}__{comparison_op}': filter_expr}
-                try:
-                    self.queryset = self.queryset.filter(**kwargs)
-                except ValidationError:
-                    raise ParseError(
-                        detail=f'bad filter expression: {filter_expr}')
-
-    def list(self, request):
-        if 'sort_by' in request.query_params:
-            sort_by = request.query_params['sort_by'].split(',')
-            for sort_expr in sort_by:
-                if sort_expr in ['-name', 'name', '-dishes__count', 'dishes__count']:
-                    self.queryset = self.queryset.order_by(sort_expr)
-                else:
-                    return Response(status=status.HTTP_400_BAD_REQUEST, data=f"unrecognized sort expression: {sort_expr}")
-        self.__process_filter(request, 'name')
-        self.__process_filter(request, 'date_added')
-        self.__process_filter(request, 'date_modified')
-
-        serializer = PublicMenuSimpleSerializer(
-            self.queryset, many=True, context={'request': request})
-        return Response(serializer.data)
 
 
 class PrivateMenuViewSet(viewsets.ModelViewSet):
