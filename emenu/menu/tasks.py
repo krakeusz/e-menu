@@ -46,6 +46,3 @@ def schedule_new_dishes_mail():
         email = EmailMessage(mail_subject, message, to=[user_email])
         email.content_subtype = 'html'
         email.send()
-
-# docker run -d -p 5672:5672 rabbitmq
-# celery -A emenu worker --loglevel=info -E -B
