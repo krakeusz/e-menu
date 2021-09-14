@@ -12,8 +12,8 @@ from rest_framework.reverse import reverse
 import re
 
 
-class PublicMenuListViewSet(viewsets.GenericViewSet,
-                            mixins.ListModelMixin):
+class PublicMenuViewSet(viewsets.GenericViewSet,
+                        mixins.ListModelMixin):
     """
     Get the list of all menus. This is a public method.
 

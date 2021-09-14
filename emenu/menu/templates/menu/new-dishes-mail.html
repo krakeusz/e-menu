@@ -1,0 +1,24 @@
+Hello {{ user_greeting_name }},<br />
+
+Yesterday there were updates to the eMenu recipes!
+
+{% if newly_added_dishes %}
+<h2>New recipes</h2>
+<ul>
+    {% for dish in newly_added_dishes %}
+    <li>{{ dish.name }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if newly_modified_dishes %}
+<h2>Modified recipes</h2>
+<ul>
+    {% for dish in newly_modified_dishes %}
+    <li>{{ dish.name }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+Regards,<br />
+eMenu Team.

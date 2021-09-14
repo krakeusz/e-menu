@@ -10,8 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import pytz
+import datetime
 from pathlib import Path
 import os
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +30,14 @@ SECRET_KEY = os.environ.get(
 DEBUG = int(os.environ.get('DEBUG', default=False))
 
 ALLOWED_HOSTS = []
+
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_PORT = 465
 
 
 # Application definition
@@ -109,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
@@ -127,6 +138,19 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+def timezone_adjusted_now(): return datetime.datetime.now(pytz.timezone(TIME_ZONE))
+
+
+CELERY_ENABLE_UTC = False
+
+CELERY_BEAT_SCHEDULE = {
+    "schedule_new_dishes_mail": {
+        "task": "emenu.menu.tasks.schedule_new_dishes_mail",
+        "schedule": crontab(hour="10", minute="0", nowfun=timezone_adjusted_now),
+    },
+}
 
 try:
     from emenu.local_settings import *

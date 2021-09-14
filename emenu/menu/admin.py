@@ -1,3 +1,14 @@
 from django.contrib import admin
+from emenu.menu.models import Dish, Menu
 
-# Register your models here.
+
+class DishAdmin(admin.ModelAdmin):
+    pass
+
+
+class MenuAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Dish, DishAdmin)
+admin.site.register(Menu, MenuAdmin)

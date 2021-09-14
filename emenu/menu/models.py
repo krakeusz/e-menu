@@ -14,6 +14,9 @@ class Dish(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "dishes"
+
 
 class Menu(models.Model):
     name = fields.CharField(unique=True, max_length=100)
