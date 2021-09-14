@@ -1,1 +1,139 @@
-[{"model": "menu.dish", "pk": 1, "fields": {"name": "French fries", "description": "The famous potato wedges deep fried in fresh oil.", "price": "8.50", "preparation_time": "00:15:00", "date_added": "2021-09-12T09:05:48.844Z", "date_modified": "2021-09-12T09:06:02.899Z", "is_vegan": true}}, {"model": "menu.dish", "pk": 2, "fields": {"name": "Greek salad", "description": "The fresh salad with Greek feta cheese.", "price": "12.00", "preparation_time": "00:15:00", "date_added": "2021-09-12T09:11:51.056Z", "date_modified": "2021-09-12T09:11:51.056Z", "is_vegan": true}}, {"model": "menu.dish", "pk": 3, "fields": {"name": "White wine", "description": "A glass of the finest white wine.", "price": "15.00", "preparation_time": "00:01:00", "date_added": "2021-09-12T09:12:02.823Z", "date_modified": "2021-09-12T09:12:02.823Z", "is_vegan": true}}, {"model": "menu.dish", "pk": 4, "fields": {"name": "Tap water", "description": "Water from the tap.", "price": "3.00", "preparation_time": "00:01:00", "date_added": "2021-09-12T09:52:31.828Z", "date_modified": "2021-09-12T09:52:31.828Z", "is_vegan": true}}, {"model": "menu.dish", "pk": 5, "fields": {"name": "Grilled chicken", "description": "Chicken breast, seasoned and grilled.", "price": "15.00", "preparation_time": "00:20:00", "date_added": "2021-09-12T09:53:19.361Z", "date_modified": "2021-09-12T09:53:19.361Z", "is_vegan": false}}, {"model": "menu.dish", "pk": 6, "fields": {"name": "T-Bone steak", "description": "The famous beef steak in a T shape.", "price": "40.00", "preparation_time": "00:10:00", "date_added": "2021-09-12T09:53:57.947Z", "date_modified": "2021-09-12T09:53:57.947Z", "is_vegan": false}}, {"model": "menu.menu", "pk": 1, "fields": {"name": "September Menu", "description": "The menu for the end of summer.", "date_added": "2021-09-12T09:03:12.155Z", "date_modified": "2021-09-12T09:12:53.129Z", "dishes": [1, 2, 3]}}, {"model": "menu.menu", "pk": 2, "fields": {"name": "August Menu", "description": "The menu for the middle of the summer.", "date_added": "2021-09-12T09:30:54.285Z", "date_modified": "2021-09-13T09:57:15.389Z", "dishes": [2, 3, 5]}}, {"model": "menu.menu", "pk": 3, "fields": {"name": "October Menu", "description": "All available during the Octoberfest!", "date_added": "2021-09-13T06:19:30.331Z", "date_modified": "2021-09-13T06:19:30.331Z", "dishes": [1, 2, 3, 4, 5, 6]}}, {"model": "menu.menu", "pk": 4, "fields": {"name": "November Menu", "description": "work in progress...", "date_added": "2021-09-13T09:49:35.649Z", "date_modified": "2021-09-13T09:49:35.649Z", "dishes": []}}]
+[
+    {
+        "model": "menu.dish",
+        "pk": 1,
+        "fields": {
+            "name": "French fries",
+            "description": "The famous potato wedges deep fried in fresh oil.",
+            "price": "8.50",
+            "preparation_time": "00:15:00",
+            "date_added": "2021-09-13T09:05:48.844Z",
+            "date_modified": "2021-09-13T09:06:02.899Z",
+            "is_vegan": true
+        }
+    },
+    {
+        "model": "menu.dish",
+        "pk": 2,
+        "fields": {
+            "name": "Greek salad",
+            "description": "The fresh salad with Greek feta cheese.",
+            "price": "12.00",
+            "preparation_time": "00:15:00",
+            "date_added": "2021-09-12T09:11:51.056Z",
+            "date_modified": "2021-09-12T09:11:51.056Z",
+            "is_vegan": true
+        }
+    },
+    {
+        "model": "menu.dish",
+        "pk": 3,
+        "fields": {
+            "name": "White wine",
+            "description": "A glass of the finest white wine.",
+            "price": "15.00",
+            "preparation_time": "00:01:00",
+            "date_added": "2021-09-12T09:12:02.823Z",
+            "date_modified": "2021-09-12T09:12:02.823Z",
+            "is_vegan": true
+        }
+    },
+    {
+        "model": "menu.dish",
+        "pk": 4,
+        "fields": {
+            "name": "Tap water",
+            "description": "Water from the tap.",
+            "price": "3.00",
+            "preparation_time": "00:01:00",
+            "date_added": "2021-09-12T09:52:31.828Z",
+            "date_modified": "2021-09-13T09:52:31.828Z",
+            "is_vegan": true
+        }
+    },
+    {
+        "model": "menu.dish",
+        "pk": 5,
+        "fields": {
+            "name": "Grilled chicken",
+            "description": "Chicken breast, seasoned and grilled.",
+            "price": "15.00",
+            "preparation_time": "00:20:00",
+            "date_added": "2021-09-12T09:53:19.361Z",
+            "date_modified": "2021-09-12T09:53:19.361Z",
+            "is_vegan": false
+        }
+    },
+    {
+        "model": "menu.dish",
+        "pk": 6,
+        "fields": {
+            "name": "T-Bone steak",
+            "description": "The famous beef steak in a T shape.",
+            "price": "40.00",
+            "preparation_time": "00:10:00",
+            "date_added": "2021-09-12T09:53:57.947Z",
+            "date_modified": "2021-09-12T09:53:57.947Z",
+            "is_vegan": false
+        }
+    },
+    {
+        "model": "menu.menu",
+        "pk": 1,
+        "fields": {
+            "name": "September Menu",
+            "description": "The menu for the end of summer.",
+            "date_added": "2021-09-12T09:03:12.155Z",
+            "date_modified": "2021-09-12T09:12:53.129Z",
+            "dishes": [
+                1,
+                2,
+                3
+            ]
+        }
+    },
+    {
+        "model": "menu.menu",
+        "pk": 2,
+        "fields": {
+            "name": "August Menu",
+            "description": "The menu for the middle of the summer.",
+            "date_added": "2021-09-12T09:30:54.285Z",
+            "date_modified": "2021-09-13T09:57:15.389Z",
+            "dishes": [
+                2,
+                3,
+                5
+            ]
+        }
+    },
+    {
+        "model": "menu.menu",
+        "pk": 3,
+        "fields": {
+            "name": "October Menu",
+            "description": "All available during the Octoberfest!",
+            "date_added": "2021-09-13T06:19:30.331Z",
+            "date_modified": "2021-09-13T06:19:30.331Z",
+            "dishes": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ]
+        }
+    },
+    {
+        "model": "menu.menu",
+        "pk": 4,
+        "fields": {
+            "name": "November Menu",
+            "description": "work in progress...",
+            "date_added": "2021-09-13T09:49:35.649Z",
+            "date_modified": "2021-09-13T09:49:35.649Z",
+            "dishes": []
+        }
+    }
+]
