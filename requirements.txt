@@ -8,6 +8,7 @@ click-didyoumean==0.0.3
 click-plugins==1.1.1
 click-repl==0.2.0
 coverage==5.5
+dj-database-url==0.5.0
 Django==3.2.7
 django-filter==2.4.0
 django-smtp-ssl==1.0
@@ -16,6 +17,7 @@ gunicorn==20.1.0
 kombu==5.1.0
 Markdown==3.3.4
 prompt-toolkit==3.0.20
+psycopg2==2.9.1
 pycodestyle==2.7.0
 pytz==2021.1
 PyYAML==5.4.1

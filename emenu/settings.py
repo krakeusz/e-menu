@@ -15,6 +15,7 @@ import datetime
 from pathlib import Path
 import os
 from celery.schedules import crontab
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +30,8 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = int(os.environ.get('DEBUG', default=False))
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+                 'radiant-badlands-54507.herokuapp.com']
 
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_USE_TLS = True
@@ -99,6 +101,11 @@ DATABASES = {
     }
 }
 
+DATABASE_URL = os.environ.get('DATABASE_URL')
+db_from_env = dj_database_url.config(
+    default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -149,7 +156,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 def timezone_adjusted_now(): return datetime.datetime.now(pytz.timezone(TIME_ZONE))
 
 
-CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
+CELERY_BROKER_URL = os.environ.get(
+    'CLOUDAMQP_URL', default='amqp://guest:guest@rabbitmq:5672//')
 
 CELERY_ENABLE_UTC = False
 
