@@ -1,8 +1,11 @@
-from datetime import timedelta
+from datetime import date, timedelta
+from emenu.menu.models import Dish
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.contrib.auth.models import User
+from django.test import TestCase
+from emenu.menu.tasks import get_new_dishes_mail_contents
 from rest_framework import status
 from rest_framework.test import APITestCase
 import json
@@ -179,3 +182,23 @@ class PrivateApiTests(APITestCase):
         response_dict = json.loads(response.content)
         self.assertGreater(parse_datetime(response_dict['date_modified']), timezone.now() -
                            timedelta(minutes=1))
+
+
+class ReportTests(TestCase):
+    fixtures = ['testing.json']
+
+    def test_new_dishes_email_content(self):
+        french_fries = Dish.objects.filter(pk=1).get()
+        yesterday = date.today() - timedelta(days=1)
+        french_fries.date_added = yesterday
+        french_fries.save()
+        User.objects.create_user(
+            username='Eve', password='abc', email='eve@example.com')
+
+        results = get_new_dishes_mail_contents()
+
+        self.assertEqual(len(results), 1)
+        email_content = results[0][1]
+        self.assertGreater(email_content.find('Eve'), -1)
+        self.assertGreater(email_content.find('New recipes'), -1)
+        self.assertGreater(email_content.find('French fries'), -1)
